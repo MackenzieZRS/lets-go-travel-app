@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { searchDestinations } from '@/lib/claude';
 import { QuizState } from '@/lib/types';
 
-export const maxDuration = 60; // Allow up to 60 seconds for Claude API response
+export const maxDuration = 30; // Allow up to 30 seconds for Claude API response
 
 export async function POST(req: Request) {
   try {
