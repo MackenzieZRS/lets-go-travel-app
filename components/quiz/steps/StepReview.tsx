@@ -2,7 +2,7 @@
 
 import { QuizState } from "@/lib/types";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import LoadingScreen from "@/components/loading/LoadingScreen";
 import { getDestinationImage } from "@/lib/destinationImages";
 
@@ -15,6 +15,13 @@ export default function StepReview({ state, onEdit }: StepProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isApiComplete, setIsApiComplete] = useState(false);
+
+  const handleNavigation = useCallback(() => {
+    // Small delay to ensure sessionStorage is stable
+    setTimeout(() => {
+      router.push("/results");
+    }, 100);
+  }, [router]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -71,7 +78,7 @@ export default function StepReview({ state, onEdit }: StepProps) {
           origin={state.origin} 
           budget={state.budget}
           isComplete={isApiComplete} 
-          onComplete={() => router.push("/results")} 
+          onComplete={handleNavigation} 
         />
       </div>
     );

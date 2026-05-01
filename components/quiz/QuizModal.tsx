@@ -131,7 +131,7 @@ export default function QuizModal({ onClose }: QuizModalProps) {
         </button>
       </div>
 
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-center p-6 overflow-y-auto">
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-start pt-8 pb-12 px-6 overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}

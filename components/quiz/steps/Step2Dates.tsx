@@ -12,9 +12,14 @@ interface StepProps {
 }
 
 export default function Step2Dates({ state, updateState, onNext, isEditMode }: StepProps) {
+  const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [departureDate, setDepartureDate] = useState<Date | null>(state.departureDate);
   const [returnDate, setReturnDate] = useState<Date | null>(state.returnDate);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const getDaysInMonth = (date: Date) => {
     return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -97,16 +102,16 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
 
   return (
     <div className="w-full max-w-lg flex flex-col items-center text-center">
-      <h2 className="font-playfair text-3xl md:text-4xl text-sand mb-8">
+      <h2 className="font-playfair text-2xl md:text-3xl text-sand mb-4">
         When are you free?
       </h2>
       
-      <div className="bg-charcoal border border-sand/10 rounded-2xl p-6 w-full shadow-lg">
-        <div className="flex justify-between items-center mb-6">
+      <div className="bg-charcoal border border-sand/10 rounded-2xl p-4 w-full shadow-lg">
+        <div className="flex justify-between items-center mb-4">
           <button onClick={prevMonth} className="p-2 text-sand hover:text-sage transition-colors">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <div className="font-bold text-lg text-sand">
+          <div className="font-bold text-base text-sand">
             {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
           </div>
           <button onClick={nextMonth} className="p-2 text-sand hover:text-sage transition-colors">
@@ -114,9 +119,9 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
           </button>
         </div>
 
-        <div className="grid grid-cols-7 gap-1 mb-2">
+        <div className="grid grid-cols-7 gap-1 mb-1">
           {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-            <div key={day} className="w-10 h-10 flex items-center justify-center text-xs font-semibold text-sand/50">
+            <div key={day} className="w-8 h-8 flex items-center justify-center text-[10px] font-semibold text-sand/50">
               {day}
             </div>
           ))}
@@ -127,7 +132,7 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
         </div>
       </div>
 
-      <div className="mt-8 flex gap-4 text-sm text-sand/70">
+      <div className="mt-6 flex gap-4 text-sm text-sand/70">
         <div>
           <span className="block text-xs uppercase tracking-wider text-sage mb-1">Departure</span>
           {departureDate ? departureDate.toLocaleDateString() : 'Select date'}
@@ -141,8 +146,8 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
 
       <button
         onClick={handleContinue}
-        disabled={!departureDate || !returnDate}
-        className="mt-10 px-8 py-4 bg-terracotta text-sand font-bold rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#A3380B] transition-colors"
+        disabled={!mounted || !departureDate || !returnDate}
+        className="mt-6 px-8 py-4 bg-terracotta text-sand font-bold rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#A3380B] transition-all active:scale-95 shadow-lg"
       >{isEditMode ? "Save & Return to Review →" : "Continue →"}</button>
     </div>
   );
