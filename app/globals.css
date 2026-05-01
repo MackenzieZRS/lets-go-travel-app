@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 242, 226, 196; /* sand */
+  --background-start-rgb: 26, 22, 18; /* charcoal */
+  --background-end-rgb: 26, 22, 18; /* charcoal */
+  
+  --color-terracotta: #C1440E;
+  --color-terracotta-muted: #D46A3E;
+  --color-sage: #7D9E8C;
+  --color-sage-light: #A8C4B8;
+  --color-dusty-blue: #6B8FA8;
+  --color-dusty-blue-light: #8FAFC4;
+  --color-sand: #F2E2C4;
+  --color-sand-dark: #D4C4A0;
+  --color-charcoal: #1A1612;
+  --color-charcoal-light: #2A2420;
+  --color-charcoal-mid: #3A3028;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1A1612; 
+}
+::-webkit-scrollbar-thumb {
+  background: #E8963A; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C1440E; 
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
