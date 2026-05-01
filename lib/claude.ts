@@ -85,7 +85,7 @@ JSON Schema per destination:
 
   try {
     const message = await anthropic.messages.create({
-      model: 'claude-sonnet-4-6',
+      model: 'claude-3-5-sonnet-20240620',
       max_tokens: 4096,
       temperature: 0.7,
       system: systemPrompt,
