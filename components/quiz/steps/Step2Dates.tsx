@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { QuizState } from "@/lib/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
