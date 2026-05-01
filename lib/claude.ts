@@ -3,8 +3,12 @@ import { QuizState } from './types';
 
 const apiKey = process.env.ANTHROPIC_API_KEY;
 
+if (!apiKey) {
+  console.error("CRITICAL ERROR: ANTHROPIC_API_KEY is missing from environment variables.");
+}
+
 const anthropic = new Anthropic({
-  apiKey: apiKey,
+  apiKey: apiKey || '',
 });
 
 export async function searchDestinations(state: QuizState) {
@@ -82,10 +86,11 @@ JSON Schema per destination:
 
   try {
     const models = [
+      'claude-sonnet-4-5',
       'claude-sonnet-4-6',
       'claude-opus-4-6',
       'claude-sonnet-4-5-20250929',
-      'claude-3-5-sonnet-20240620' // Legacy fallback
+      'claude-3-5-sonnet-20240620'
     ];
 
     let lastError = null;
@@ -109,7 +114,9 @@ JSON Schema per destination:
         const text = message.content[0].type === 'text' ? message.content[0].text : '';
         const match = text.match(/\{[\s\S]*\}/);
         if (!match) {
-          console.error("No JSON found in response from model:", modelName);
+          const errorMsg = `No JSON found in response from model: ${modelName}`;
+          console.error(errorMsg);
+          lastError = new Error(errorMsg);
           continue;
         }
         
@@ -118,18 +125,24 @@ JSON Schema per destination:
         return JSON.parse(jsonStr);
       } catch (err: any) {
         lastError = err;
-        console.warn(`Model ${modelName} failed:`, err.message);
+        console.error(`Model ${modelName} failed with error:`, err.message);
+        console.error("Full stack trace:", err.stack);
+        
+        // If it's an auth error, don't bother trying other models
         if (err.status === 401 || err.status === 403) break; 
         continue;
       }
     }
 
     throw lastError || new Error("All models failed to respond");
-  } catch (error) {
-    console.error("Claude API Error:", error);
+  } catch (error: any) {
+    console.error("Claude API Final Error:", error.message);
+    console.error("Stack trace:", error.stack);
+    
     if (!apiKey) {
       throw new Error("ANTHROPIC_API_KEY is missing. Please add it to your environment variables.");
     }
     throw error;
   }
 }
+

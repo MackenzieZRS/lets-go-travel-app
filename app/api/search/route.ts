@@ -16,11 +16,17 @@ export async function POST(req: Request) {
     // In a real app, cache this response in Supabase
     
     return NextResponse.json(results);
-  } catch (error) {
-    console.error('Search API Error:', error);
+  } catch (error: any) {
+    console.error('Search API Error:', error.message);
+    console.error('Full stack trace:', error.stack);
+    
     return NextResponse.json(
-      { error: 'Failed to find destinations' },
+      { 
+        error: 'Failed to find destinations',
+        details: error.message || 'Unknown error'
+      },
       { status: 500 }
     );
   }
 }
+
