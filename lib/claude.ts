@@ -83,6 +83,7 @@ JSON Schema per destination:
 }
 `;
 
+  try {
     const models = [
       'claude-sonnet-4-6',
       'claude-opus-4-6',
@@ -121,7 +122,7 @@ JSON Schema per destination:
       } catch (err: any) {
         lastError = err;
         console.warn(`Model ${modelName} failed:`, err.message);
-        if (err.status === 401 || err.status === 403) break; // Auth errors won't be fixed by changing models
+        if (err.status === 401 || err.status === 403) break; 
         continue;
       }
     }
@@ -129,7 +130,9 @@ JSON Schema per destination:
     throw lastError || new Error("All models failed to respond");
   } catch (error) {
     console.error("Claude API Error:", error);
-    if (!apiKey) throw new Error("ANTHROPIC_API_KEY is missing. Please add it to your environment variables.");
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY is missing. Please add it to your environment variables.");
+    }
     throw error;
   }
 }
