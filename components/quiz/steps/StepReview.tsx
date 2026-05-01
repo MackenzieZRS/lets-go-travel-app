@@ -63,11 +63,10 @@ export default function StepReview({ state, onEdit }: StepProps) {
       await preloadImages(data.destinations || []);
       
       setIsApiComplete(true);
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       setIsLoading(false);
-      // Would show a toast error here
-      alert("Something went wrong. Please try again.");
+      alert(`Something went wrong: ${error.message || "Please try again."}`);
     }
   };
 

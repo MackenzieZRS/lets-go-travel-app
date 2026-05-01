@@ -1,8 +1,13 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { QuizState } from './types';
 
+const apiKey = process.env.ANTHROPIC_API_KEY || '';
+if (!apiKey) {
+  console.warn("ANTHROPIC_API_KEY is missing from environment variables.");
+}
+
 const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '',
+  apiKey: apiKey,
 });
 
 export async function searchDestinations(state: QuizState) {
@@ -108,6 +113,7 @@ JSON Schema per destination:
     return JSON.parse(jsonStr);
   } catch (error) {
     console.error("Claude API Error:", error);
+    if (!apiKey) throw new Error("ANTHROPIC_API_KEY is missing. Please add it to your environment variables.");
     throw error;
   }
 }
