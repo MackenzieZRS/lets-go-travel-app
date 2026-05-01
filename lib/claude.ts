@@ -84,10 +84,10 @@ JSON Schema per destination:
 `;
 
     const models = [
-      'claude-3-5-sonnet-20241022',
-      'claude-3-5-sonnet-20240620',
-      'claude-3-7-sonnet-20250219', // Just in case this becomes available
-      'claude-3-sonnet-20240229'
+      'claude-sonnet-4-6',
+      'claude-opus-4-6',
+      'claude-sonnet-4-5-20250929',
+      'claude-3-5-sonnet-20240620' // Legacy fallback
     ];
 
     let lastError = null;
