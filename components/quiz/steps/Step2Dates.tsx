@@ -31,7 +31,7 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
       setDepartureDate(selectedDate);
       setReturnDate(null);
     } else {
-      if (selectedDate > departureDate) {
+      if (selectedDate >= departureDate) {
         setReturnDate(selectedDate);
       } else {
         setDepartureDate(selectedDate);
@@ -62,7 +62,9 @@ export default function Step2Dates({ state, updateState, onNext, isEditMode }: S
       const isReturn = returnDate?.getTime() === currentDate.getTime();
       const isInRange = departureDate && returnDate && currentDate > departureDate && currentDate < returnDate;
       
-      const isPast = currentDate < new Date(new Date().setHours(0, 0, 0, 0));
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const isPast = currentDate.getTime() < today.getTime();
 
       days.push(
         <button

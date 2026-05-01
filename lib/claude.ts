@@ -92,12 +92,16 @@ JSON Schema per destination:
       ],
     });
 
-    // Parse the response
+    // Parse the response using robust regex
     const text = message.content[0].type === 'text' ? message.content[0].text : '';
-    let jsonStr = text.trim();
-    if (jsonStr.startsWith('```json')) {
-      jsonStr = jsonStr.replace(/```json/g, '').replace(/```/g, '');
+    
+    const match = text.match(/\{[\s\S]*\}/);
+    if (!match) {
+      console.error("No JSON found in response:", text.substring(0, 200));
+      throw new Error("Invalid response format from AI");
     }
+    
+    const jsonStr = match[0];
     
     console.log("Claude Raw Response:", jsonStr.substring(0, 500) + "...");
 
