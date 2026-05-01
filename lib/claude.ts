@@ -1,10 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { QuizState } from './types';
 
-const apiKey = process.env.ANTHROPIC_API_KEY || '';
-if (!apiKey) {
-  console.warn("ANTHROPIC_API_KEY is missing from environment variables.");
-}
+const apiKey = process.env.ANTHROPIC_API_KEY;
 
 const anthropic = new Anthropic({
   apiKey: apiKey,
