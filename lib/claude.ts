@@ -83,34 +83,50 @@ JSON Schema per destination:
 }
 `;
 
-  try {
-    const message = await anthropic.messages.create({
-      model: 'claude-3-5-sonnet-20240620',
-      max_tokens: 4096,
-      temperature: 0.7,
-      system: systemPrompt,
-      messages: [
-        {
-          role: 'user',
-          content: 'Find my perfect budget trips based on my constraints. Return only the raw JSON.'
+    const models = [
+      'claude-3-5-sonnet-20241022',
+      'claude-3-5-sonnet-20240620',
+      'claude-3-7-sonnet-20250219', // Just in case this becomes available
+      'claude-3-sonnet-20240229'
+    ];
+
+    let lastError = null;
+
+    for (const modelName of models) {
+      try {
+        console.log(`Attempting search with model: ${modelName}`);
+        const message = await anthropic.messages.create({
+          model: modelName,
+          max_tokens: 4096,
+          temperature: 0.7,
+          system: systemPrompt,
+          messages: [
+            {
+              role: 'user',
+              content: 'Find my perfect budget trips based on my constraints. Return only the raw JSON.'
+            }
+          ],
+        });
+
+        const text = message.content[0].type === 'text' ? message.content[0].text : '';
+        const match = text.match(/\{[\s\S]*\}/);
+        if (!match) {
+          console.error("No JSON found in response from model:", modelName);
+          continue;
         }
-      ],
-    });
-
-    // Parse the response using robust regex
-    const text = message.content[0].type === 'text' ? message.content[0].text : '';
-    
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) {
-      console.error("No JSON found in response:", text.substring(0, 200));
-      throw new Error("Invalid response format from AI");
+        
+        const jsonStr = match[0];
+        console.log(`Success with model: ${modelName}`);
+        return JSON.parse(jsonStr);
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`Model ${modelName} failed:`, err.message);
+        if (err.status === 401 || err.status === 403) break; // Auth errors won't be fixed by changing models
+        continue;
+      }
     }
-    
-    const jsonStr = match[0];
-    
-    console.log("Claude Raw Response:", jsonStr.substring(0, 500) + "...");
 
-    return JSON.parse(jsonStr);
+    throw lastError || new Error("All models failed to respond");
   } catch (error) {
     console.error("Claude API Error:", error);
     if (!apiKey) throw new Error("ANTHROPIC_API_KEY is missing. Please add it to your environment variables.");
