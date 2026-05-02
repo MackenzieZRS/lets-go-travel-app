@@ -42,7 +42,7 @@ Return this exact JSON structure:
 }`;
 
   try {
-    const modelName = 'claude-3-5-sonnet-20241022';
+    const modelName = 'claude-haiku-4-5-20251001';
     console.log(`Attempting search with model: ${modelName}`);
     
     const message = await anthropic.messages.create({
@@ -50,8 +50,6 @@ Return this exact JSON structure:
       max_tokens: 1500,
       system: systemPrompt,
       messages: [{ role: 'user', content: 'Find trips. JSON only.' }],
-    }, {
-      timeout: 20000 // 20 seconds
     });
 
     const text = message.content[0].type === 'text' ? message.content[0].text : '';
