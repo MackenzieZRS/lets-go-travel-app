@@ -34,7 +34,6 @@ JSON Schema:
     "estimatedTotalMin": number, "estimatedTotalMax": number,
     "whyItFitsYou": "string (2 sentences)", "vibeScore": number, "vibeMatches": ["string"],
     "budgetFit": boolean, "budgetOverage": number|null,
-    "sampleItinerary": [{ "day": number, "activities": ["string"] }],
     "googleFlightsUrl": "string", "bookingComUrl": "string", "unsplashQuery": "string"
   }]
 }`;
@@ -45,7 +44,7 @@ JSON Schema:
     
     const message = await anthropic.messages.create({
       model: modelName,
-      max_tokens: 1000,
+      max_tokens: 2000,
       temperature: 0.7,
       system: systemPrompt,
       messages: [{ role: 'user', content: 'Find trips. JSON only.' }],
