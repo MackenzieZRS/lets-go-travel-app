@@ -117,7 +117,7 @@ export default function DestinationModal({ destination, onClose }: DestinationMo
                   href={destination.googleFlightsUrl || "https://flights.google.com"} 
                   target="_blank" 
                   rel="noreferrer"
-                  className="flex-1 px-6 py-4 border-2 border-dusty-blue text-dusty-blue font-bold rounded-xl text-center hover:bg-dusty-blue hover:text-charcoal transition-colors"
+                  className="flex-1 px-6 py-4 border-2 border-dusty-blue text-sand font-bold rounded-xl text-center hover:bg-dusty-blue hover:text-charcoal transition-colors"
                 >
                   Search Google Flights →
                 </a>
@@ -209,18 +209,18 @@ export default function DestinationModal({ destination, onClose }: DestinationMo
               <div className="p-8 rounded-3xl bg-sand border-l-4 border-terracotta shadow-xl">
                 <h3 className="font-playfair text-2xl text-charcoal mb-6 font-bold">Cost Breakdown</h3>
                 
-                <div className="space-y-4 text-charcoal/80 mb-8 font-medium">
+                <div className="space-y-4 text-charcoal mb-8 font-medium">
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2"><span>✈️</span> Flights/Travel</span>
-                    <span>${destination.estimatedFlightCostMin} - ${destination.estimatedFlightCostMax}</span>
+                    <span className="flex items-center gap-2 font-semibold"><span>✈️</span> Flights/Travel</span>
+                    <span className="text-terracotta font-bold">${destination.estimatedFlightCostMin} - ${destination.estimatedFlightCostMax}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2"><span>🏨</span> Hotels</span>
-                    <span>${destination.estimatedHotelCostMin} - ${destination.estimatedHotelCostMax}</span>
+                    <span className="flex items-center gap-2 font-semibold"><span>🏨</span> Hotels</span>
+                    <span className="text-terracotta font-bold">${destination.estimatedHotelCostMin} - ${destination.estimatedHotelCostMax}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2"><span>🍽</span> Food & Activities</span>
-                    <span>${destination.estimatedFoodActivitiesCostMin} - ${destination.estimatedFoodActivitiesCostMax}</span>
+                    <span className="flex items-center gap-2 font-semibold"><span>🍽</span> Food & Activities</span>
+                    <span className="text-terracotta font-bold">${destination.estimatedFoodActivitiesCostMin} - ${destination.estimatedFoodActivitiesCostMax}</span>
                   </div>
                 </div>
 
