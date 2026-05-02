@@ -91,7 +91,7 @@ export default function DestinationModal({ destination, onClose }: DestinationMo
           <div className="h-4 w-px bg-sand/20 hidden md:block"></div>
           
           <div className="flex gap-2">
-            {destination.vibeMatches.map((vibe, idx) => (
+            {destination.vibeMatches?.map((vibe, idx) => (
               <span key={vibe} className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide ${idx % 2 === 0 ? 'bg-sage text-charcoal' : 'bg-dusty-blue text-sand'}`}>
                 {vibe}
               </span>

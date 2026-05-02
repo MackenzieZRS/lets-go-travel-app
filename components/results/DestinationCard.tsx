@@ -14,13 +14,13 @@ export default function DestinationCard({ destination, onClick }: DestinationCar
   const imageInfo = getDestinationImage(destination.name);
   const imageUrl = imageInfo.url;
 
-  const primaryVibe = destination.vibeMatches[0] || "";
+  const primaryVibe = destination.vibeMatches?.[0] || "";
   let tintClass = "";
-  if (["Beach & Sun", "Wellness & Slow Travel"].includes(primaryVibe)) {
+  if (primaryVibe && ["Beach & Sun", "Wellness & Slow Travel"].includes(primaryVibe)) {
     tintClass = "from-dusty-blue/40";
-  } else if (["Adventure & Outdoors", "Road Trip & Scenic", "Budget Max"].includes(primaryVibe)) {
+  } else if (primaryVibe && ["Adventure & Outdoors", "Road Trip & Scenic", "Budget Max"].includes(primaryVibe)) {
     tintClass = "from-sage/40";
-  } else if (["Food & Culture", "History & Art", "Nightlife & Social", "City Break"].includes(primaryVibe)) {
+  } else if (primaryVibe && ["Food & Culture", "History & Art", "Nightlife & Social", "City Break"].includes(primaryVibe)) {
     tintClass = "from-terracotta/40";
   }
 
@@ -76,7 +76,7 @@ export default function DestinationCard({ destination, onClick }: DestinationCar
         </div>
 
         <div className="flex flex-wrap gap-2 mt-2">
-          {destination.vibeMatches.slice(0, 2).map((vibe, idx) => (
+          {destination.vibeMatches?.slice(0, 2).map((vibe, idx) => (
             <span key={vibe} className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border ${idx % 2 === 0 ? 'bg-sage/20 text-sage border-sage/30' : 'bg-dusty-blue/20 text-dusty-blue border-dusty-blue/30'}`}>
               {vibe}
             </span>
