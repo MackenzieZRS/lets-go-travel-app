@@ -14,7 +14,9 @@ const anthropic = new Anthropic({
 export async function searchDestinations(state: QuizState) {
   const systemPrompt = `You are a travel advisor. Return ONLY a JSON object, no other text.
 
-Return exactly 3 destinations that match:
+Return exactly 3 destinations from this list ONLY: Havana, Nassau, Cancun, Tulum, San Juan, Medellin, Cartagena, Mexico City, Buenos Aires, Lima, Lisbon, Porto, Barcelona, Rome, Amsterdam, Prague, Budapest, Athens, Santorini, Dubrovnik, Bangkok, Bali, Chiang Mai, Hanoi, Ho Chi Minh City, Tokyo, Kyoto, New Orleans, Miami, Nashville, Austin, Denver, Savannah, Sedona, Key West, Charleston, Dubai, Marrakech, Cape Town.
+
+Match these criteria:
 - Budget: ${state.budget} USD total
 - From: ${state.origin}
 - Vibes: ${state.vibes.join(", ")}
